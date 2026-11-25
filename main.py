@@ -44,6 +44,11 @@ def main() -> None:
     assert 1 <= len(ENTRY) <= 140, f"entry is {len(ENTRY)} chars, gate wants 1-140"
     assert "\n" not in ENTRY and "\r" not in ENTRY, "entry must be a single line"
     assert ENTRY.strip(), "entry must not be only whitespace"
+    # Tight-line discipline (brief criterion 4: no wasted words): the
+    # line must not spend any of its 140 characters on leading,
+    # trailing or doubled spaces.
+    assert ENTRY == ENTRY.strip(), "entry must not start or end with whitespace"
+    assert "  " not in ENTRY, "entry must not contain doubled spaces"
     assert ENTRY.encode("utf-8").decode("utf-8") == ENTRY
     directory = os.path.dirname(OUTPUT_PATH)
     if directory:
